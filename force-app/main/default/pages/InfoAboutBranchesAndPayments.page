@@ -1,0 +1,44 @@
+<apex:page standardController="Bank__c" extensions="InfoAboutBranchesAndPaymentsController">
+
+    <apex:form >
+        <apex:pageBlock title="Hello {!$User.FirstName}!">
+            Viewing  the branches of {!currentBank.Name}.
+            </apex:pageBlock>
+                <apex:pageBlock title="Payments on the all branches">
+
+
+                    <table border="1px" >
+                        <tr>
+                            <apex:repeat value="{!wrappers}" var="wrapper" id="theRepeatBranches">
+                                <th><apex:outputText value="{!wrapper.branch.Name}" id="theValue"/></th>
+                            </apex:repeat>
+                        </tr>
+                        <tr>
+                            <apex:repeat value="{!wrappers}" var="wrapper" id="theRepeatForPayments">
+                                <td>                                   
+                                    <apex:repeat value="{!wrapper.branch.Payments__r}" var="payment" id="theRepeatPayments">
+                                        <apex:outputText value="{!payment.Id} - " id="theValueOfPaymentSingleBranch"/>
+                                        <apex:outputText value="{!payment.Amount__c}" id="theAmountOfPaymentSingleBranch"/><br/>
+                                    </apex:repeat>                                    
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                        <tr>
+                            <apex:repeat value="{!wrappers}" var="wrapper" id="theSums">
+                                <th><apex:outputText value="{!wrapper.sumOfPayments}" id="theValue"/></th>
+                            </apex:repeat>
+                        </tr>
+                        <tr>
+                            <apex:repeat value="{!wrappers}" var="wrapper" id="theAvailable">
+                                <th><apex:inputField value="{!wrapper.branch.Coffers__c}" /></th>
+                            </apex:repeat>
+                        </tr>
+                        
+                    
+                    </table>
+
+                    <apex:commandButton value="Save" action="{!saveThisShit}"/>
+                    
+                </apex:pageBlock>
+    </apex:form>
+</apex:page>

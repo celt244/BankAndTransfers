@@ -1,0 +1,107 @@
+<apex:page standardController="Contact" extensions="SendAndReceiveFormController">
+        <apex:form >
+<apex:pageBlock title="Workspace for creating a payment" id="payments">
+    
+        
+    <apex:pageBlockSection title="Payments">
+        <!-- <apex:form > -->
+            <apex:commandButton value="New Payment" action="{!createPayment}"/><br/>
+
+            <table style="width:100%">
+                    <tr>
+                        <td><apex:outputLabel value="Recepient Name: " for="newPayment" rendered="{!newPayment}"/></td>
+                        <td><apex:inputText value="{!recipientName}" rendered="{!newPayment}" id="newPayment"/></td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputLabel value="Amount: " for="amount" rendered="{!newPayment}"/></td>
+                        <td><apex:inputText value="{!amount}" rendered="{!newPayment}" id="amount"/></td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputLabel value="Recipient INN: " for="inn" rendered="{!newPayment}"/></td>
+                        <td><apex:inputText value="{!recipientINN}" rendered="{!newPayment}" id="inn"/></td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputLabel value="Type of payment: " for="type" rendered="{!newPayment}"/></td>
+                        <td><apex:selectList value="{!type}" size="1" rendered="{!newPayment}" id="type">
+                                <apex:selectOptions value="{!types}"/>
+                            </apex:selectList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><apex:outputLabel value="Available systems: " for="system" rendered="{!newPayment}"/></td>
+                        <td><apex:selectList value="{!paymentSystem}" size="1" rendered="{!newPayment}" id="system">
+                                <apex:selectOptions value="{!systems}"/>
+                            </apex:selectList>
+                        </td>
+                    </tr>
+                    
+            </table>
+            <apex:commandButton value="Send" action="{!sendPayment}" rendered="{!newPayment}" reRender="payments" />
+        <!-- </apex:form> -->
+
+        
+
+
+        </apex:pageBlockSection>
+
+    <apex:pageBlockSection title="Inbounds Payments">        
+        <!-- <apex:form > -->
+        <apex:outputPanel id="inPayTable">
+            <apex:pageMessages />
+            <apex:pageBlockTable value="{!InboundPayments}" var="p">
+                <apex:column headerValue="Amount" value="{!p.amount}"/>
+                <apex:column headerValue="Date of sending" value="{!p.dateSend}"/>
+                <apex:column headerValue="Sender" value="{!p.senderName}"/>
+                <apex:column headerValue="Recipient" value="{!p.recipientName}"/>
+                <apex:column headerValue="Type" value="{!p.type}"/>
+                <apex:column headerValue="Recipient INN" value="{!p.recipientINN}"/>
+                <apex:column headerValue="Sender INN" value="{!p.senderINN}"/>
+                <apex:column headerValue="Status" >
+                    <apex:selectList value="{!p.status}" size="1" >
+                        <apex:selectOptions value="{!paymentStatuses}"/>
+                    </apex:selectList>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:commandButton value="Pay marked payments" action="{!payMarkedItems}"/>
+        <!-- </apex:form> -->
+        </apex:outputPanel>
+        
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection title="Outbounds Payments">
+    <!-- <apex:form > -->
+        <apex:pageBlockTable value="{!OutboundPayments}" var="p">
+            <apex:column headerValue="Amount" value="{!p.amount}"/>
+            <apex:column headerValue="Date of sending" value="{!p.dateSend}"/>
+            <apex:column headerValue="Sender" value="{!p.senderName}"/>
+            <apex:column headerValue="Recipient" value="{!p.recipientName}"/>
+            <apex:column headerValue="Type" value="{!p.type}"/>
+            <apex:column headerValue="Recipient INN" value="{!p.recipientINN}"/>
+            <apex:column headerValue="Sender INN" value="{!p.senderINN}"/>
+        </apex:pageBlockTable>
+    <!-- </apex:form> -->
+    
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection title="Payment History">
+    <!-- <apex:form > -->
+        <apex:pageBlockTable value="{!oldPayments}" var="p">
+            <apex:column headerValue="Amount" value="{!p.amount}"/>
+            <apex:column headerValue="Date of sending" value="{!p.dateSend}"/>
+            <apex:column headerValue="Sender" value="{!p.senderName}"/>
+            <apex:column headerValue="Recipient" value="{!p.recipientName}"/>
+            <apex:column headerValue="Type" value="{!p.type}"/>
+            <apex:column headerValue="Recipient INN" value="{!p.recipientINN}"/>
+            <apex:column headerValue="Sender INN" value="{!p.senderINN}"/>
+        </apex:pageBlockTable>
+    <!-- </apex:form> -->
+    
+    </apex:pageBlockSection>
+
+
+
+</apex:pageBlock>
+
+</apex:form>
+    
+</apex:page>
